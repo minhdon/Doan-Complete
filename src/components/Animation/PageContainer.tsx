@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 
 type PageContainerProps = PropsWithChildren<{
@@ -29,7 +29,3 @@ export function PageContainer({
     </motion.main>
   );
 }
-
-
-
-
