@@ -4,6 +4,8 @@ import styles from "./CallApi.module.css";
 
 import { SortContext } from "../useContext/priceSortContext";
 import { IndexContext } from "../useContext/IndexProductContext";
+import { useNavigate, createSearchParams } from "react-router";
+import { paymentPerProductContext } from "../useContext/PaymentPerProduct";
 
 const API_URL = "http://127.0.0.1:8000/?format=json";
 interface ApiData {
@@ -20,7 +22,7 @@ const PRODUCTS_PER_PAGE = 8;
 const DataFetcher: React.FC = () => {
   const sortContext = useContext(SortContext);
   const indexContext = useContext(IndexContext);
-
+  const navigate = useNavigate();
   const [data, setData] = useState<ApiData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +30,7 @@ const DataFetcher: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const context = useContext(ProductContext);
+  const paymentContext = useContext(paymentPerProductContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -140,12 +143,26 @@ const DataFetcher: React.FC = () => {
   };
   indexContext.ChangeCountIndex(indexOfFirstProduct);
 
+  const toDetailProduct = (id: number) => {
+    const currentId = id;
+    navigate({
+      pathname: "/DetailProduct",
+      search: createSearchParams({
+        productId: currentId.toString(),
+      }).toString(),
+    });
+  };
+
   return (
     <>
       <div className={styles.hero}>
         {}
         {currentProducts.map((item) => (
-          <div key={item.id} className={styles.component}>
+          <div
+            key={item.id}
+            className={styles.component}
+            onClick={() => toDetailProduct(item.id)}
+          >
             <img src={item.img} alt="" />
             <div className={styles.desc}>
               {item.productName} <span>hỗ trợ </span> {item.productDesc}
@@ -155,7 +172,11 @@ const DataFetcher: React.FC = () => {
             </p>
             <button
               className={styles.button}
-              onClick={context.ChangeCountProduct}
+              onClick={(e) => {
+                e.stopPropagation();
+                context.ChangeCountProduct(e);
+                paymentContext.setPaymentProducts(item);
+              }}
             >
               Chọn mua
             </button>

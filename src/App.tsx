@@ -8,8 +8,8 @@ import ForgotPasswordPage from "./pages/TSX/ForgotPasswordPage";
 import ProductPage from "./pages/TSX/ProductPage";
 import { AnimatePresence } from "framer-motion";
 import ClickEffect from "./components/ClickEffect/ClickEffect";
-import DataFetcher from "./components/CallApi/CallApi";
-
+import DetailProductPage from "./pages/TSX/DetailProductPage";
+import PaymentPage from "./pages/TSX/PaymentPage";
 
 function App() {
   const location = useLocation();
@@ -27,7 +27,8 @@ function App() {
             element={<ForgotPasswordPage />}
           ></Route>
           <Route path="/Product" element={<ProductPage />}></Route>
-          <Route path="/api" element={<DataFetcher />} />
+          <Route path="/DetailProduct" element={<DetailProductPage />}></Route>
+          <Route path="/Payment" element={<PaymentPage />}></Route>
         </Routes>
       </AnimatePresence>
     </>

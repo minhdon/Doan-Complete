@@ -18,7 +18,7 @@ export const Hero = () => {
           to better health.
         </p>
         <div className={styles.shopping}>
-          <a href="/product/product.html">Shop Now</a>
+          <a href="/product">Shop Now</a>
           {/* You might want to add a real href to this link */}
           <a href="">Top Product</a>
         </div>

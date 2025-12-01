@@ -2,7 +2,6 @@ import type { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 
 type PageContainerProps = PropsWithChildren<{
-  // Optional: allow overriding default transition duration per page
   durationMs?: number;
   className?: string;
 }>;

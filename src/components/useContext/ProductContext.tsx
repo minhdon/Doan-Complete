@@ -2,21 +2,22 @@ import { createContext, useState, type ReactNode } from "react";
 
 export type ProductContextType = {
   CountProduct: number;
-  ChangeCountProduct: () => void;
+  ChangeCountProduct: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const ProductContext = createContext<ProductContextType>({
   CountProduct: 0,
-  ChangeCountProduct: () => {}, // Một hàm rỗng làm mặc định
+  ChangeCountProduct: () => {},
 });
 type ProductProviderProps = {
-  children: ReactNode; // Báo cho TypeScript biết children là một React Node
+  children: ReactNode;
 };
 
 function ProductProvider({ children }: ProductProviderProps) {
   const [CountProduct, setCountProduct] = useState(0);
-  const ChangeCountProduct = () => {
+  const ChangeCountProduct = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCountProduct((CountProduct) => CountProduct + 1);
+    event.stopPropagation();
   };
 
   const value = {

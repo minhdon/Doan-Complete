@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import styles from "../CSS/Header.module.css";
 import { ProductContext } from "../../useContext/ProductContext";
+import { useNavigate } from "react-router";
 
 export const Header = () => {
   const timerRef = useRef<number | null>(null);
@@ -8,6 +9,10 @@ export const Header = () => {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollY = useRef(0);
   const productContext = useContext(ProductContext);
+  const productList = isProductList ? styles.active : "";
+  const headerHidden = isHeaderHidden ? styles["header-hidden"] : "";
+
+  const navigate = useNavigate();
 
   const handleProductMouseEnter = () => {
     if (timerRef.current) {
@@ -47,9 +52,11 @@ export const Header = () => {
   const loginPageLink = () => {
     window.location.href = "/login";
   };
-
-  const productList = isProductList ? styles.active : "";
-  const headerHidden = isHeaderHidden ? styles["header-hidden"] : "";
+  const toPayment = () => {
+    navigate({
+      pathname: "/Payment",
+    });
+  };
 
   return (
     <>
@@ -95,7 +102,7 @@ export const Header = () => {
           <button className={styles["btnLogin-popup"]} onClick={loginPageLink}>
             Login
           </button>{" "}
-          <button className={styles["btnShoppingCart"]}>
+          <button className={styles["btnShoppingCart"]} onClick={toPayment}>
             {" "}
             <i className="fa-solid fa-cart-shopping"></i> Giỏ hàng{" "}
             <div className={styles.countProduct}>
